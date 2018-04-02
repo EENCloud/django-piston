@@ -182,7 +182,6 @@ class Mimer(object):
         type_formencoded = "application/x-www-form-urlencoded"
 
         ctype = self.request.META.get('CONTENT_TYPE', type_formencoded)
-        
         if ctype == type_formencoded:
             return None
         
@@ -204,19 +203,16 @@ class Mimer(object):
         """    
         ctype = self.content_type()
         self.request.content_type = ctype
-        
         if not self.is_multipart() and ctype:
             loadee = self.loader_for_type(ctype)
-            
-            try:
-                self.request.data = loadee(self.request.body)
-                
-                # Reset both POST and PUT from request, as its
-                # misleading having their presence around.
-                self.request.POST = self.request.PUT = dict()
-            except (TypeError, ValueError):
-                raise MimerDataException
-
+            if loadee:
+                try:
+                    self.request.data = loadee(self.request.body)
+                    # Reset both POST and PUT from request, as its
+                    # misleading having their presence around.
+                    self.request.POST = self.request.PUT = dict()
+                except (TypeError, ValueError):
+                    raise MimerDataException
         return self.request
                 
     @classmethod

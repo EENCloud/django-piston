@@ -91,6 +91,12 @@ class Resource(object):
             except MimerDataException:
                 return rc.BAD_REQUEST
 
+            if not hasattr(request, 'data'):
+                if rm == "POST":
+                    request.data = request.POST
+                else:
+                    request.data = request.PUT
+
         if not rm in handler.allowed_methods:
             return HttpResponseNotAllowed(handler.allowed_methods)
 
