@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django import get_version as django_version
 from decorator import decorator
+import json
+from django.http import QueryDict
 
 from datetime import datetime, timedelta
 
@@ -138,6 +140,9 @@ def coerce_put_post(request):
         try:
             request.method = "POST"
             request._load_post_and_files()
+            if request.content_type == 'application/json':
+                request.POST = QueryDict('', mutable=True)
+                request.POST.update(json.loads(request.body))
             request.method = "PUT"
         except AttributeError:
             request.META['REQUEST_METHOD'] = 'POST'
