@@ -176,8 +176,9 @@ class Mimer(object):
         for a certain mimetype.
         """
         for loadee, mimes in Mimer.TYPES.iteritems():
-            if ctype in mimes:
-                return loadee
+            for mime in mimes:
+                if ctype.startswith(mime):
+                    return loadee
 
     def content_type(self):
         """
@@ -187,7 +188,7 @@ class Mimer(object):
         type_formencoded = "application/x-www-form-urlencoded"
 
         ctype = self.request.META.get('CONTENT_TYPE', type_formencoded)
-        if ctype == type_formencoded:
+        if ctype.startswith(type_formencoded):
             return None
         
         return ctype
