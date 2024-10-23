@@ -1,0 +1,30 @@
+name: django-piston
+id: ari:cloud:compass:4337fc0d-aa55-4ff9-bd75-ef7117ff9381:component/4c6fdffe-fa4a-46ef-9e6f-a1aa05480c89/f58bb8a5-7d9c-4d8d-b84e-955b02525a89
+description: Real Geeks fork of Piston - based on 0.2.2.1
+configVersion: 1
+typeId: SERVICE
+ownerId: null
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/EENCloud/django-piston
+relationships:
+  DEPENDS_ON: []
+labels:
+  - compliance
+  - delete-candidate
+  - language:python
+  - soc
+  - source:github
+customFields:
+  - name: Audit status
+    type: single_select
+    value: null
+  - name: Production deployed
+    type: boolean
+    value: false
+  - name: Requires audit
+    type: boolean
+    value: false
